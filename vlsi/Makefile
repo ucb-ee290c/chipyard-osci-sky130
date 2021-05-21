@@ -18,8 +18,8 @@ include $(base_dir)/variables.mk
 # vlsi types and rules
 #########################################################################################
 sim_name           ?= vcs # needed for GenerateSimFiles, but is unused
-tech_name          ?= skywater
-tech_dir           ?= $(if $(filter $(tech_name),asap7 nangate45 sky130 skywater),\
+tech_name          ?= sky130
+tech_dir           ?= $(if $(filter $(tech_name),asap7 nangate45 sky130),\
                         $(vlsi_dir)/hammer/src/hammer-vlsi/technology/$(tech_name), \
                         $(vlsi_dir)/hammer-$(tech_name)-plugin/$(tech_name))
 SMEMS_COMP         ?= $(tech_dir)/sram-compiler.json

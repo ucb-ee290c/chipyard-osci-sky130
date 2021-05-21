@@ -1,6 +1,6 @@
 # Technology Setup
 
-vlsi.core.technology: skywater
+vlsi.core.technology: sky130
 
 # technology.sky130.sky130_pdk: "/tools/commercial/skywater/skywater-pdk"
 # technology.sky130.sky130_nda: "/tools/commercial/skywater/swtech130/skywater-src-nda"
@@ -82,7 +82,7 @@ par.inputs.physical_only_cells_list: []
 vlsi.core.sram_generator_tool: "sram_compiler"
 # You should specify a location for the SRAM generator in the tech plugin
 # vlsi.core.sram_generator_tool_path: ["hammer-tstech28-plugin"]
-vlsi.core.sram_generator_tool_path: ["hammer/src/hammer-vlsi/technology/skywater"]
+vlsi.core.sram_generator_tool_path: ["hammer/src/hammer-vlsi/technology/sky130"]
 vlsi.core.sram_generator_tool_path_meta: "append"
 
 # Tool options. Replace with your tool plugin of choice.
