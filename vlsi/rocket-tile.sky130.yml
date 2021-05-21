@@ -1,0 +1,106 @@
+# Technology Setup
+
+vlsi.core.technology: skywater
+
+# technology.sky130.sky130_pdk: "/tools/commercial/skywater/skywater-pdk"
+# technology.sky130.sky130_nda: "/tools/commercial/skywater/swtech130/skywater-src-nda"
+# technology.sky130.sky130A: "/tools/commercial/skywater/swtech130/local/sky130A/"
+# technology.sky130.open_pdks: "/tools/commercial/skywater/swtech130/local/open_pdks" 
+# technology.sky130.openram_lib: "/tools/commercial/skywater/swtech130/local/sky130_sram_macros" 
+# vlsi.inputs.dont_use_mode: append
+# vlsi.inputs.dont_use_list: ["*a211*",]
+
+vlsi.core.max_threads: 12
+
+
+# General Hammer Inputs
+
+synthesis.clock_gating_mode: off
+
+
+# Hammer will auto-generate a CPF for simple power designs; see hammer/src/hammer-vlsi/defaults.yml for more info
+vlsi.inputs.power_spec_mode: "auto"
+vlsi.inputs.power_spec_type: "cpf"
+
+# Specify clock signals
+vlsi.inputs.clocks: [
+  {name: "clock", period: "50ns", uncertainty: "1ps"}
+]
+
+# Generate Make include to aid in flow 
+vlsi.core.build_system: make
+
+# Placement Constraints
+#  
+vlsi.inputs.placement_constraints:
+  - path: "RocketTile"
+    type: toplevel
+    x: 0
+    y: 0
+    width: 10000
+    height: 10000
+    margins:
+      left: 0
+      right: 0
+      top: 0
+      bottom: 0 
+
+## Power Straps
+par.power_straps_mode: generate
+par.generate_power_straps_method: by_tracks
+par.blockage_spacing: 2.0
+par.generate_power_straps_options:
+  by_tracks:
+    strap_layers:
+      - met2
+      - met3
+      - met4
+      - met5
+    pin_layers:
+      - met4
+      - met5
+   ##track_width: 7 # minimum allowed for M2 & M3
+   ##track_spacing: 0
+    ##track_spacing_M3: 1 # to avoid M2 shorts at higher density
+    ##track_start: 10
+    power_utilization: 0.05
+    ##power_utilization_M8: 1.0
+    ##power_utilization_M9: 1.0
+
+# Pin placement constraints
+vlsi.inputs.pin_mode: generated
+vlsi.inputs.pin.generate_mode: semi_auto
+vlsi.inputs.pin.assignments: [
+  {pins: "*", layers: ["met3", "met5"], side: "left"}
+]
+
+# Because the DCO is a dummy layout, we treat it as a physical-only cell
+par.inputs.physical_only_cells_mode: append
+par.inputs.physical_only_cells_list: []
+
+# SRAM Compiler compiler options
+vlsi.core.sram_generator_tool: "sram_compiler"
+# You should specify a location for the SRAM generator in the tech plugin
+# vlsi.core.sram_generator_tool_path: ["hammer-tstech28-plugin"]
+vlsi.core.sram_generator_tool_path: ["hammer/src/hammer-vlsi/technology/skywater"]
+vlsi.core.sram_generator_tool_path_meta: "append"
+
+# Tool options. Replace with your tool plugin of choice.
+# Genus options
+vlsi.core.synthesis_tool: "genus"
+vlsi.core.synthesis_tool_path: ["hammer-cadence-plugins/synthesis"]
+vlsi.core.synthesis_tool_path_meta: "append"
+synthesis.genus.version: "1813"
+# Innovus options
+vlsi.core.par_tool: "innovus"
+vlsi.core.par_tool_path: ["hammer-cadence-plugins/par"]
+vlsi.core.par_tool_path_meta: "append"
+par.innovus.version: "181"
+par.innovus.design_flow_effort: "standard"
+par.innovus.floorplan_mode: "auto" 
+par.inputs.gds_merge: true
+# Calibre options
+vlsi.core.drc_tool: "calibre"
+vlsi.core.drc_tool_path: ["hammer-mentor-plugins/drc"]
+vlsi.core.lvs_tool: "calibre"
+vlsi.core.lvs_tool_path: ["hammer-mentor-plugins/lvs"]

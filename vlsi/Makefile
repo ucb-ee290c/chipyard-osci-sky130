@@ -18,27 +18,26 @@ include $(base_dir)/variables.mk
 # vlsi types and rules
 #########################################################################################
 sim_name           ?= vcs # needed for GenerateSimFiles, but is unused
-tech_name          ?= asap7
-tech_dir           ?= $(if $(filter $(tech_name),asap7 nangate45),\
+tech_name          ?= skywater
+tech_dir           ?= $(if $(filter $(tech_name),asap7 nangate45 sky130 skywater),\
                         $(vlsi_dir)/hammer/src/hammer-vlsi/technology/$(tech_name), \
                         $(vlsi_dir)/hammer-$(tech_name)-plugin/$(tech_name))
 SMEMS_COMP         ?= $(tech_dir)/sram-compiler.json
 SMEMS_CACHE        ?= $(tech_dir)/sram-cache.json
 SMEMS_HAMMER       ?= $(build_dir)/$(long_name).mems.hammer.json
 
-ifeq ($(tech_name),asap7)
-	MACROCOMPILER_MODE ?= --mode synflops
-else ifdef USE_SRAM_COMPILER
-	MACROCOMPILER_MODE ?= -l $(SMEMS_COMP) --use-compiler -hir $(SMEMS_HAMMER) --mode strict
-else
-	MACROCOMPILER_MODE ?= -l $(SMEMS_CACHE) -hir $(SMEMS_HAMMER) --mode strict
-endif	
+# ifeq ($(tech_name),asap7)
+# 	MACROCOMPILER_MODE ?= --mode synflops
+# else ifdef USE_SRAM_COMPILER
+# 	MACROCOMPILER_MODE ?= -l $(SMEMS_COMP) --use-compiler -hir $(SMEMS_HAMMER) --mode strict
+# else
+# 	MACROCOMPILER_MODE ?= -l $(SMEMS_CACHE) -hir $(SMEMS_HAMMER) --mode strict
+# endif	
+MACROCOMPILER_MODE ?= -l $(SMEMS_CACHE) -hir $(SMEMS_HAMMER) --mode strict
 
 ENV_YML            ?= $(vlsi_dir)/env.yml
-INPUT_CONFS        ?= $(if $(filter $(tech_name),nangate45),\
-                        example-nangate45.yml,\
-                        example-asap7.yml)
-HAMMER_EXEC        ?= ./example-vlsi
+INPUT_CONFS        ?= rocket-tile.sky130.yml 
+HAMMER_EXEC        ?= hammer-vlsi
 VLSI_TOP           ?= $(TOP)
 VLSI_HARNESS_DUT_NAME ?= chiptop
 VLSI_OBJ_DIR       ?= $(vlsi_dir)/build
