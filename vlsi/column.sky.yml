@@ -1,20 +1,29 @@
 # General Hammer Inputs
 
+# File inputs
+synthesis.inputs:
+  top_module: "column3"
+  input_files:
+    - "NonAnalogComputeInMemory/src/column.sv" 
+    - "NonAnalogComputeInMemory/gen/tree.v" 
+    - "NonAnalogComputeInMemory/tech/sky130.sv" 
+synthesis.clock_gating_mode: off
+
+
 # Placement Constraints
 #  
 vlsi.inputs.placement_constraints:
-  - path: "RocketTile"
+  - path: "column3"
     type: toplevel
     x: 0
     y: 0
-    width: 10000
-    height: 10000
+    width: 5000
+    height: 5000
     margins:
       left: 0
       right: 0
       top: 0
       bottom: 0 
-
 
 # Technology Setup
 # Technology used is Skywater
