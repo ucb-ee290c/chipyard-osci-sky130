@@ -1,0 +1,127 @@
+# General Hammer Inputs
+
+# Placement Constraints
+#  
+vlsi.inputs.placement_constraints:
+  - path: "Tile"
+    type: toplevel
+    x: 0
+    y: 0
+    width: 5000
+    height: 5000
+    margins:
+      left: 0
+      right: 0
+      top: 0
+      bottom: 0 
+
+vlsi.inputs.dont_use_mode: append
+vlsi.inputs.dont_use_list: ["*sdf*"] # Scan flops goin haywire!
+
+# Technology Setup
+# Technology used is Skywater
+vlsi.core.technology: sky130
+vlsi.core.node: 130
+
+technology.sky130.sky130_pdk: "/tools/commercial/skywater/skywater-pdk"
+technology.sky130.sky130_nda: "/tools/commercial/skywater/swtech130/skywater-src-nda"
+technology.sky130.sky130A: "/tools/commercial/skywater/swtech130/local/sky130A/"
+
+technology.sky130.open_pdks: "/tools/commercial/skywater/swtech130/local/open_pdks"
+technology.sky130.sram_lib: "/tools/B/nayiri/sky130/skywater-pdk/libraries/sky130_fd_bd_sram"
+# technology.pdk_root: "/tools/B/nayiri/skywater/skywater-pdk"
+# technology.pdk_home: "/tools/commercial/skywater/swtech130/skywater-src-nda/s8/V2.0.1"
+
+
+vlsi.core.max_threads: 4
+
+# General Hammer Inputs
+vlsi.inputs:
+  supplies:
+    power: [{name: "VDD", pin: "VPWR"}]
+    ground: [{name: "VSS", pin: "VGND"}]
+    VDD: "1.8 V"
+    GND: "0 V"
+
+
+# Hammer will auto-generate a CPF for simple power designs; see hammer/src/hammer-vlsi/defaults.yml for more info
+vlsi.inputs.power_spec_mode: "auto"
+vlsi.inputs.power_spec_type: "cpf"
+
+# Specify the setup and hold corners for Skywater
+vlsi.inputs.mmmc_corners: [
+  {name: "sky130_fd_sc_hd__ss_100C_1v60", type: "setup", voltage: "1.60 V", temp: "100 C"},
+  {name: "sky130_fd_sc_hd__ff_n40C_1v95", type: "hold", voltage: "1.95 V", temp: "-40 C"}
+]
+
+# Specify clock signals
+# ASAP7 bug: period value should actually be in ps
+vlsi.inputs.clocks: [
+  {name: "clock", period: "1000ns", uncertainty: "0.1ns"}
+]
+
+# Power Straps
+par.power_straps_mode: generate
+par.generate_power_straps_method: by_tracks
+par.blockage_spacing: 2.0
+par.generate_power_straps_options:
+  by_tracks:
+    strap_layers:
+      - met2
+      - met3
+      - met4
+      - met5
+    pin_layers:
+     - met4
+     - met5
+    track_width: 1 
+    track_spacing: 0
+    track_start: 10
+    power_utilization: 0.2
+
+# Pin placement constraints
+vlsi.inputs.pin_mode: generated
+vlsi.inputs.pin.generate_mode: semi_auto
+vlsi.inputs.pin.assignments: [
+  {pins: "*", layers: ["met3", "met5"], side: "left"}
+]
+
+# Voltus options
+vlsi.core.power_tool: "voltus"
+vlsi.core.power_tool_path: ["hammer-cadence-plugins/power"]
+vlsi.core.power_tool_path_meta: "append"
+power.voltus.version: "181"
+
+# Tool options. Replace with your tool plugin of choice.
+# Genus options
+#vlsi.core.synthesis_tool: "dc"
+vlsi.core.synthesis_tool: "genus"
+vlsi.core.synthesis_tool_path: ["hammer-cadence-plugins/synthesis"] 
+vlsi.core.synthesis_tool_path_meta: "append"
+synthesis.genus.version: "1813" #o-"191"
+
+# Innovus options
+vlsi.core.par_tool: "innovus"
+vlsi.core.par_tool_path: ["hammer-cadence-plugins/par"]
+vlsi.core.par_tool_path_meta: "append"
+par.innovus.version: "191"
+par.innovus.design_flow_effort: "standard"
+par.innovus.floorplan_mode: "auto" 
+par.inputs.gds_merge: true
+
+# Calibre options
+vlsi.core.drc_tool: "calibre"
+vlsi.core.drc_tool_path: ["hammer-mentor-plugins/drc"]
+vlsi.core.lvs_tool: "calibre"
+vlsi.core.lvs_tool_path: ["hammer-mentor-plugins/lvs"]
+# drc.calibre.calibre_drc_bin: "/tools/mentor/calibre/current/bin/calibre" 
+
+# VCS options
+vlsi.core.sim_tool: "vcs"
+vlsi.core.sim_tool_path: ["hammer-synopsys-plugins/sim"]
+vlsi.core.sim_tool_path_meta: "append"
+sim.vcs.version: "P-2019.06-SP2-5" #o-"G-2012.09"
+
+# Generate Make include to aid in flow 
+vlsi.core.build_system: make
+
