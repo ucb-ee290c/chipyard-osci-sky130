@@ -158,3 +158,6 @@
 [submodule "generators/aes"]
 	path = generators/aes
 	url = git@bwrcrepo.eecs.berkeley.edu:EE290C_EE194_tstech28/aes.git
+[submodule "vlsi/sky130-files"]
+	path = vlsi/sky130-files
+	url = git@bwrcrepo.eecs.berkeley.edu:swtech130/sky130-files.git
