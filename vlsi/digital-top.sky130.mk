@@ -36,7 +36,7 @@ SMEMS_HAMMER       ?= $(build_dir)/$(long_name).mems.hammer.json
 MACROCOMPILER_MODE ?= -l $(SMEMS_CACHE) -hir $(SMEMS_HAMMER) --mode strict
 
 ENV_YML            ?= $(vlsi_dir)/env.yml
-INPUT_CONFS        ?= sky130-files/sky130.yml rocket-tile.sky130.yml 
+INPUT_CONFS        ?= sky130-files/sky130.yml digital-top.sky130.yml 
 HAMMER_EXEC        ?= hammer-vlsi
 VLSI_TOP           ?= $(TOP)
 VLSI_HARNESS_DUT_NAME ?= chiptop

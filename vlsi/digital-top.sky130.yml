@@ -3,35 +3,37 @@
 # Placement Constraints
 #  
 vlsi.inputs.placement_constraints:
-  - path: "RocketTile"
+  - path: "ChipTop"
     type: toplevel
     x: 0
     y: 0
-    width: 10000
-    height: 10000
+    width: 4000
+    height: 4000
     margins:
       left: 0
       right: 0
       top: 0
-      bottom: 0 
+      bottom: 0
+  # - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_0_0"
+  #   type: hardmacro
+  #   x: 1000 
+  #   y: 1000
+  #   top_layer: "met4"
+  # - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/data_arrays_0/data_arrays_0_0_ext/mem_0_0"
+  #   type: hardmacro
+  #   x: 2500
+  #   y: 1800
+  #   orientation: r0
+  #   top_layer: "met4"
+  # - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/tag_array/tag_array_ext/mem_0_0"
+  #   type: hardmacro
+  #   x: 1000
+  #   y: 2600
+  #   orientation: r0
+  #   top_layer: "met4"
 
 # Auto-floor-plan 
 par.innovus.floorplan_mode: "auto" 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 vlsi.core.max_threads: 32
 
