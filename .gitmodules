@@ -68,9 +68,7 @@
 [submodule "toolchains/libgloss"]
 	path = toolchains/libgloss
 	url = https://github.com/ucb-bar/libgloss-htif.git
-[submodule "vlsi/hammer"]
-	path = vlsi/hammer
-	url = https://github.com/ucb-bar/hammer.git
+
 [submodule "tools/dsptools"]
 	path = tools/dsptools
 	url = https://github.com/ucb-bar/dsptools.git
@@ -86,15 +84,6 @@
 [submodule "tools/firrtl-interpreter"]
 	path = tools/firrtl-interpreter
 	url = https://github.com/freechipsproject/firrtl-interpreter.git
-[submodule "vlsi/hammer-cadence-plugins"]
-	path = vlsi/hammer-cadence-plugins
-	url = https://github.com/ucb-bar/hammer-cadence-plugins.git
-[submodule "vlsi/hammer-synopsys-plugins"]
-	path = vlsi/hammer-synopsys-plugins
-	url = https://github.com/ucb-bar/hammer-synopsys-plugins.git
-[submodule "vlsi/hammer-mentor-plugins"]
-	path = vlsi/hammer-mentor-plugins
-	url = https://github.com/ucb-bar/hammer-mentor-plugins.git
 [submodule "toolchains/qemu"]
 	path = toolchains/qemu
 	url = https://github.com/qemu/qemu.git
@@ -134,3 +123,38 @@
 [submodule "fpga/fpga-shells"]
 	path = fpga/fpga-shells
 	url = https://github.com/sifive/fpga-shells.git
+
+[submodule "vlsi/hammer"]
+	path = vlsi/hammer
+	url = https://github.com/ucb-bar/hammer.git
+[submodule "vlsi/hammer-cadence-plugins"]
+	path = vlsi/hammer-cadence-plugins
+	url = git@bwrcrepo.eecs.berkeley.edu:EE290C_EE194_tstech28/hammer-cadence-plugins.git
+[submodule "vlsi/hammer-synopsys-plugins"]
+	path = vlsi/hammer-synopsys-plugins
+	url = git@bwrcrepo.eecs.berkeley.edu:EE290C_EE194_tstech28/hammer-synopsys-plugins.git
+[submodule "vlsi/hammer-mentor-plugins"]
+	path = vlsi/hammer-mentor-plugins
+	url = git@bwrcrepo.eecs.berkeley.edu:EE290C_EE194_tstech28/hammer-mentor-plugins.git
+[submodule "vlsi/hammer-tstech28-plugin"]
+	path = vlsi/hammer-tstech28-plugin
+	url = git@bwrcrepo.eecs.berkeley.edu:EE290C_EE194_tstech28/hammer-tstech28-plugin
+[submodule "tools/verif"]
+	path = tools/verif
+	url = https://github.com/TsaiAnson/verif.git
+[submodule "generators/baseband"]
+	path = generators/baseband
+	url = git@bwrcrepo.eecs.berkeley.edu:EE290C_EE194_tstech28/baseband.git
+
+
+
+
+[submodule "toolchains/riscv-tools/libgloss-htif"]
+	path = toolchains/riscv-tools/libgloss-htif
+	url = https://github.com/ucb-bar/libgloss-htif.git
+[submodule "generators/dma"]
+	path = generators/dma
+	url = git@bwrcrepo.eecs.berkeley.edu:EE290C_EE194_tstech28/dma.git
+[submodule "generators/aes"]
+	path = generators/aes
+	url = git@bwrcrepo.eecs.berkeley.edu:EE290C_EE194_tstech28/aes.git
