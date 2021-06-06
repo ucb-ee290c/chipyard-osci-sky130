@@ -238,7 +238,28 @@ class WithDebugIOCells extends OverrideLazyIOBinder({
         }
 
         val jtagTuple = debug.systemjtag.map { j =>
-          IOCell.generateIOFromSignal(j.jtag, "jtag", p(IOCellKey), abstractResetAsAsync = true)
+        
+          val name = s"jtag"
+          val port = IO(DataMirror.internal.chiselTypeClone[JTAGIO](j.jtag)).suggestName(name)
+          val iocellBase = s"iocell_${name}"
+        
+          //val trstnIOs = IOCell.generateFromSignal(j.jtag.TRSTn, port.TRSTn, Some(s"${iocellBase}_trstn"), p(IOCellKey), IOCell.toAsyncReset)
+          val tckIOs = IOCell.generateFromSignal(j.jtag.TCK, port.TCK, Some(s"${iocellBase}_tck"), p(IOCellKey), IOCell.toAsyncReset)
+          val tmsIOs = IOCell.generateFromSignal(j.jtag.TMS, port.TMS, Some(s"${iocellBase}_tms"), p(IOCellKey), IOCell.toAsyncReset)
+          val tdiIOs = IOCell.generateFromSignal(j.jtag.TDI, port.TDI, Some(s"${iocellBase}_tdi"), p(IOCellKey), IOCell.toAsyncReset)
+          
+          //val tdoIOs = IOCell.generateFromSignal(j.jtag.TDO, port.TDO, Some(s"${iocellBase}_tdo"), p(IOCellKey), IOCell.toAsyncReset)
+          
+          val tdoIOs = Seq[IOCell] {
+            val iocell = system.p(IOCellKey).output().suggestName(s"${iocellBase}_tdo")
+            iocell.io.o := j.jtag.TDO.data
+            iocell.io.oe := j.jtag.TDO.driven
+            port.TDO.data := iocell.io.pad
+            port.TDO.driven := true.B
+            iocell
+          }
+
+          (port, tckIOs ++ tmsIOs ++ tdiIOs ++ tdoIOs)
         }
 
         val apbTuple = debug.apb.map { a =>
@@ -364,5 +385,18 @@ class WithTraceIOPunchthrough extends OverrideIOBinder({
 
 class WithDontTouchPorts extends OverrideIOBinder({
   (system: DontTouch) => system.dontTouchPorts(); (Nil, Nil)
+})
+
+import baseband.{CanHavePeripheryBLEBasebandModem, BLEBasebandModemAnalogIO, BLEBasebandModemParams}
+
+class WithBLEBasebandModemPunchthrough(params: BLEBasebandModemParams = BLEBasebandModemParams()) extends OverrideIOBinder({
+  (system: CanHavePeripheryBLEBasebandModem) => {
+    val ports: Seq[BLEBasebandModemAnalogIO] = system.baseband.map({ a =>
+      val analog = IO(new BLEBasebandModemAnalogIO(params)).suggestName("baseband")
+      analog <> a
+      analog
+    }).toSeq
+    (ports, Nil)
+  }
 })
 

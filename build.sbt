@@ -186,7 +186,8 @@ lazy val chipyard = (project in file("generators/chipyard"))
   .dependsOn(rocketchip, boom, hwacha, sifive_blocks, sifive_cache, utilities, iocell,
     sha3, // On separate line to allow for cleaner tutorial-setup patches
     dsptools, `rocket-dsptools`,
-    gemmini, icenet, tracegen, cva6, nvdla, sodor)
+    gemmini, icenet, tracegen, cva6, nvdla, sodor,
+    dma, baseband, aes) // ee290c
   .settings(libraryDependencies ++= rocketLibDeps.value)
   .settings(commonSettings)
 
@@ -319,3 +320,75 @@ lazy val fpga_shells = (project in file("./fpga/fpga-shells"))
 lazy val fpga_platforms = (project in file("./fpga"))
   .dependsOn(chipyard, fpga_shells)
   .settings(commonSettings)
+
+// ee290c modification:
+val directoryLayout = Seq(
+  scalaSource in Compile := baseDirectory.value / "src",
+  javaSource in Compile := baseDirectory.value / "resources",
+  resourceDirectory in Compile := baseDirectory.value / "resources",
+  scalaSource in Test := baseDirectory.value / "test",
+  javaSource in Test := baseDirectory.value / "resources",
+  resourceDirectory in Test := baseDirectory.value / "resources",
+)
+
+val verifSettings = Seq(
+  resolvers ++= Seq(
+    Resolver.sonatypeRepo("snapshots"),
+    Resolver.sonatypeRepo("releases"),
+    Resolver.mavenLocal
+  ),
+  scalacOptions := Seq("-deprecation", "-unchecked", "-Xsource:2.11", "-language:reflectiveCalls"),
+  libraryDependencies += "edu.berkeley.cs" %% "chiseltest" % "0.3.1",
+  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.+" % "test"
+)
+
+lazy val verifCore = (project in file("./tools/verif/core"))
+  .settings(directoryLayout)
+  .sourceDependency(chiselRef, chiselLib)
+  .dependsOn(rocketchip, dsptools, `rocket-dsptools`) // removed chipyard, 
+  .settings(commonSettings)
+  .settings(verifSettings)
+
+lazy val verifTL = (project in file("./tools/verif/tilelink"))
+  .settings(directoryLayout)
+  .sourceDependency(chiselRef, chiselLib)
+  .dependsOn(rocketchip, dsptools, `rocket-dsptools`, verifCore) // removed chipyard
+  .settings(commonSettings)
+  .settings(verifSettings)
+
+lazy val verifGemmini = (project in file("./tools/verif/cosim"))
+  .settings(directoryLayout)
+  .sourceDependency(chiselRef, chiselLib)
+  .dependsOn(verifCore, verifTL)
+  .settings(commonSettings)
+  .settings(verifSettings)
+  .settings(libraryDependencies += "com.google.protobuf" % "protobuf-java" % "3.14.0")
+  .settings(libraryDependencies += "com.google.protobuf" % "protobuf-java-util" % "3.14.0")
+
+//lazy val dma = (project in file("generators/dma"))
+//  .sourceDependency(chiselRef, chiselLib)
+//  .dependsOn(rocketchip)
+//  .dependsOn(verifCore, verifTL, verifGemmini)
+//  .settings(commonSettings)
+//  .settings(verifSettings)
+
+lazy val aes = (project in file("generators/aes"))
+  .sourceDependency(chiselRef, chiselLib)
+  .dependsOn(rocketchip, dma)
+  .dependsOn(verifCore, verifTL, verifGemmini, dma)
+  .settings(commonSettings)
+  .settings(verifSettings)
+
+lazy val baseband = (project in file("generators/baseband"))
+  .sourceDependency(chiselRef, chiselLib)
+  .dependsOn(verifCore, verifTL, verifGemmini, dma)
+  .settings(commonSettings)
+  .settings(verifSettings)
+
+lazy val dma = (project in file("generators/dma"))
+  .sourceDependency(chiselRef, chiselLib)
+  .dependsOn(rocketchip)
+  .dependsOn(verifCore, verifTL, verifGemmini)
+  .settings(commonSettings)
+  .settings(verifSettings)
+

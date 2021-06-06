@@ -7,6 +7,8 @@ import freechips.rocketchip.system._
 import freechips.rocketchip.config.Parameters
 import freechips.rocketchip.devices.tilelink._
 
+import baseband._
+
 // ------------------------------------
 // BOOM and/or Rocket Top Level Systems
 // ------------------------------------
@@ -21,6 +23,11 @@ class DigitalTop(implicit p: Parameters) extends ChipyardSystem
   with sifive.blocks.devices.gpio.HasPeripheryGPIO // Enables optionally adding the sifive GPIOs
   with sifive.blocks.devices.spi.HasPeripherySPIFlash // Enables optionally adding the sifive SPI flash controller
   with sifive.blocks.devices.spi.HasPeripherySPI // Enables optionally adding the sifive SPI port
+  
+  with chipyard.HasPeripheryEE290CBLE
+  
+  with baseband.CanHavePeripheryBLEBasebandModem
+  
   with icenet.CanHavePeripheryIceNIC // Enables optionally adding the IceNIC for FireSim
   with chipyard.example.CanHavePeripheryInitZero // Enables optionally adding the initzero example widget
   with chipyard.example.CanHavePeripheryGCD // Enables optionally adding the GCD example widget
@@ -37,6 +44,9 @@ class DigitalTopModule[+L <: DigitalTop](l: L) extends ChipyardSystemModule(l)
   with sifive.blocks.devices.gpio.HasPeripheryGPIOModuleImp
   with sifive.blocks.devices.spi.HasPeripherySPIFlashModuleImp
   with sifive.blocks.devices.spi.HasPeripherySPIModuleImp
+ 
+  with chipyard.HasPeripheryEE290CBLEModuleImp
+ 
   with chipyard.example.CanHavePeripheryGCDModuleImp
   with freechips.rocketchip.util.DontTouch
 // DOC include end: DigitalTop

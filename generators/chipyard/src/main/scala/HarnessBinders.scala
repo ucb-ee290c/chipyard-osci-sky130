@@ -27,6 +27,7 @@ import icenet.{CanHavePeripheryIceNIC, SimNetwork, NicLoopback, NICKey, NICIOvon
 
 import scala.reflect.{ClassTag}
 
+
 case object HarnessBinders extends Field[Map[String, (Any, HasHarnessSignalReferences, Seq[Data]) => Unit]](
   Map[String, (Any, HasHarnessSignalReferences, Seq[Data]) => Unit]().withDefaultValue((t: Any, th: HasHarnessSignalReferences, d: Seq[Data]) => ())
 )
@@ -249,3 +250,21 @@ class WithSimDromajoBridge extends ComposeHarnessBinder({
     ports.map { p => p.traces.map(tileTrace => SimDromajoBridge(tileTrace)(system.p)) }
   }
 })
+
+
+import baseband.{CanHavePeripheryBLEBasebandModem, BLEBasebandModemAnalogIO}
+
+class WithBLEBasebandModemTiedOff extends OverrideHarnessBinder({
+  (system: CanHavePeripheryBLEBasebandModem, th: HasHarnessSignalReferences, ports: Seq[BLEBasebandModemAnalogIO]) => {
+    ports.map { p => {
+      //p.offChipMode.rx := false.B
+      //p.offChipMode.tx := false.B
+      
+      //p.data.tx.loFSK := 0.U
+      p.data.rx.i.data := 0.U
+      p.data.rx.q.data := 0.U
+      
+    }}
+  }
+})
+
