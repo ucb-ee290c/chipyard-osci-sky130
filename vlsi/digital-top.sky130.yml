@@ -1,80 +1,30 @@
-# General Hammer Inputs
-
-# Placement Constraints
-#  
 vlsi.inputs.placement_constraints:
   - path: "ChipTop"
     type: toplevel
     x: 0
     y: 0
-    width: 4000
-    height: 4000
+    width: 2920
+    height: 3520
     margins:
       left: 0
       right: 0
       top: 0
       bottom: 0
-  # - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_0_0"
-  #   type: hardmacro
-  #   x: 1000 
-  #   y: 1000
-  #   top_layer: "met4"
-  # - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/data_arrays_0/data_arrays_0_0_ext/mem_0_0"
-  #   type: hardmacro
-  #   x: 2500
-  #   y: 1800
-  #   orientation: r0
-  #   top_layer: "met4"
-  # - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/tag_array/tag_array_ext/mem_0_0"
-  #   type: hardmacro
-  #   x: 1000
-  #   y: 2600
-  #   orientation: r0
-  #   top_layer: "met4"
-
-# Auto-floor-plan 
-par.innovus.floorplan_mode: "auto" 
-
-vlsi.core.max_threads: 32
-
-# Hammer will auto-generate a CPF for simple power designs; see hammer/src/hammer-vlsi/defaults.yml for more info
-vlsi.inputs.power_spec_mode: "auto"
-vlsi.inputs.power_spec_type: "cpf"
-
-# Specify clock signals
-vlsi.inputs.clocks: [
-  {name: "clock", period: "1000ns", uncertainty: "0.1ns"}
-]
-
-# Power Straps
-par.power_straps_mode: generate
-par.generate_power_straps_method: by_tracks
-par.blockage_spacing: 2.0
-par.generate_power_straps_options:
-  by_tracks:
-    strap_layers:
-      - met2
-      - met3
-      - met4
-      - met5
-    pin_layers:
-      - met5
-    track_width: 6
-    track_width_met5: 1
-    track_spacing: 1
-    track_start: 10
-    track_start_met5: 1
-    power_utilization: 0.2
-    power_utilization_met4: 1
-    power_utilization_met5: 1
-
-# Pin placement constraints
-vlsi.inputs.pin_mode: generated
-vlsi.inputs.pin.generate_mode: semi_auto
-vlsi.inputs.pin.assignments: [
-  {pins: "*", layers: ["met2", "met4"], side: "bottom"}
-]
-
-# Generate Make include to aid in flow 
-vlsi.core.build_system: make
-
+  - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_0_0"
+    type: hardmacro
+    x: 1000 
+    y: 1000
+    orientation: r0
+    top_layer: "met4"
+  - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/data_arrays_0/data_arrays_0_0_ext/mem_0_0"
+    type: hardmacro
+    x: 2500
+    y: 1800
+    orientation: r0
+    top_layer: "met4"
+  - path: "ChipTop/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/tag_array/tag_array_ext/mem_0_0"
+    type: hardmacro
+    x: 1000
+    y: 2600
+    orientation: r0
+    top_layer: "met4"

@@ -30,9 +30,9 @@ import baseband._
 import aes._
 
 class EE290CBLEConfig extends Config(
-  new baseband.WithBLEBasebandModem ++
-  new chipyard.iobinders.WithBLEBasebandModemPunchthrough() ++
-  new chipyard.harness.WithBLEBasebandModemTiedOff ++
+  // new baseband.WithBLEBasebandModem ++
+  // new chipyard.iobinders.WithBLEBasebandModemPunchthrough() ++
+  // new chipyard.harness.WithBLEBasebandModemTiedOff ++
 
   new aes.WithAESAccel ++
 

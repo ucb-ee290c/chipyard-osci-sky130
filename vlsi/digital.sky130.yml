@@ -1,0 +1,30 @@
+vlsi.inputs.placement_constraints:
+  - path: "Digital"
+    type: toplevel
+    x: 0
+    y: 0
+    width: 2900
+    height: 2615
+    margins:
+      left: 0
+      right: 0
+      top: 0
+      bottom: 0
+  - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_0_0"
+    type: hardmacro
+    x: 200 
+    y: 200
+    orientation: r0
+    top_layer: "met4"
+  - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/data_arrays_0/data_arrays_0_0_ext/mem_0_0"
+    type: hardmacro
+    x: 2000
+    y: 1000
+    orientation: r0
+    top_layer: "met4"
+  - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/tag_array/tag_array_ext/mem_0_0"
+    type: hardmacro
+    x: 200
+    y: 1800
+    orientation: r0
+    top_layer: "met4"
