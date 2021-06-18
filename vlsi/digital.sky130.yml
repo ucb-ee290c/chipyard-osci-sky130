@@ -12,40 +12,55 @@ vlsi.inputs.placement_constraints:
       bottom: 0
   - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_0_0"
     type: hardmacro
-    x: 650 
-    y: 200
-    orientation: r0
-    top_layer: "met4"
+    x: 30 
+    y: 50
+    orientation: mx
+    # top_layer: "met4"
   - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_1_0"
     type: hardmacro
-    x: 650 
-    y: 850
-    orientation: r0
-    top_layer: "met4"
+    x: 750 
+    y: 50
+    orientation: mx
+    # top_layer: "met4"
   - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_2_0"
     type: hardmacro
-    x: 650 
-    y: 1500
-    orientation: r0
-    top_layer: "met4"
+    x: 1470 
+    y: 50
+    orientation: mx
+    # top_layer: "met4"
+  - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_3_0"
+    type: hardmacro
+    x: 2190 
+    y: 50
+    orientation: mx
+    # top_layer: "met4"
+  - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/dcache/data/data_arrays_0/data_arrays_0_ext/mem_4_0"
+    type: hardmacro
+    x: 30 
+    y: 600
+    orientation: mx
+    # top_layer: "met4"
+
+
   - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/data_arrays_0/data_arrays_0_0_ext/mem_0_0"
     type: hardmacro
-    x: 1550
-    y: 200
+    x: 40
+    y: 2150
     orientation: r0
-    top_layer: "met4"
+    # top_layer: "met4"
   - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/data_arrays_0/data_arrays_0_0_ext/mem_1_0"
     type: hardmacro
-    x: 1550
-    y: 850
+    x: 800
+    y: 2150
     orientation: r0
-    top_layer: "met4"
+    # top_layer: "met4"
+
   - path: "Digital/system/tile_prci_domain/tile_reset_domain/tile/frontend/icache/tag_array/tag_array_ext/mem_0_0"
     type: hardmacro
-    x: 1550
-    y: 1500
+    x: 2300
+    y: 2150
     orientation: r0
-    top_layer: "met4"
+    # top_layer: "met4"
 
 # Temporarily auto-place these, while we (try to) get new instances 
 # par.innovus.floorplan_mode: "auto" 
