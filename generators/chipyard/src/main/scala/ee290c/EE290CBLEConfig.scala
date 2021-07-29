@@ -36,6 +36,11 @@ class EE290CBLEConfig extends Config(
 
   new aes.WithAESAccel ++
 
+  new chipyard.harness.WithADCDummyCounter ++
+  // new chipyard.harness.WithADCTiedOff ++
+  new chipyard.iobinders.WithADCPunchthrough ++ 
+  new WithADC(useAXI4=false) ++
+
   new WithBSel ++
   new WithNGPIOs(3) ++                                         // 2 GPIO pins
   new chipyard.config.WithSPIFlash ++

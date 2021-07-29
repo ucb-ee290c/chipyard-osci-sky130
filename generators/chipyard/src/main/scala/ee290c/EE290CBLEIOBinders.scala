@@ -37,3 +37,14 @@ class WithBSelIOCells extends OverrideIOBinder({
 })
 
 
+class WithADCPunchthrough(params: ADCParams = ADCParams()) extends OverrideIOBinder({
+  (system: HasPeripheryADCModuleImp) => {
+    val ports: Seq[ADCAnalogIO] = system.myadc_data.map({ a =>
+      val analog = IO(new ADCAnalogIO).suggestName("myadc")
+      analog <> a
+      analog
+    }).toSeq
+    (ports, Nil)
+  }
+})
+

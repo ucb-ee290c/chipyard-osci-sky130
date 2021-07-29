@@ -54,3 +54,20 @@ class WithPlusArgBSel extends OverrideHarnessBinder({
     }
   }
 })
+
+class WithADCTiedOff extends OverrideHarnessBinder({
+  (system: HasPeripheryADCModuleImp, th: HasHarnessSignalReferences, ports: Seq[ADCAnalogIO]) => {
+    ports.map { p => {
+      p.myadc_data := 0.U(8.W)
+    }}
+  }
+})
+
+class WithADCDummyCounter extends OverrideHarnessBinder({
+  (system: HasPeripheryADCModuleImp, th: HasHarnessSignalReferences, ports: Seq[ADCAnalogIO]) => {
+    val dummy_adc = Module(new ADC)
+    ports.map { p => {
+      p.myadc_data := dummy_adc.io.adc.myadc_data
+    }}
+  }
+})
